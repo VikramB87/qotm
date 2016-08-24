@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<link rel="stylesheet" href="qotd.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<script src="qotd.js"></script>
+<style>
+body {
+    background-image: url($image_path);
+}
+</style>
+<title>Quote of the Moment</title>
+</head>
+<body>
+<div class="wrapper">
+    <h3>#$id</h3>
+    <div class="quote">$quote</div>
+    <div class="author">$author</div>
+    <div id="refresh" class="refresh"></div>
+    <div class="push"></div>
+</div>
+<div class="footer">
+    <div><span id="source">From: $source</span><span id="addedOn">Added On: $createdOn</span></div>
+    <div id="notes">$notes</div>
+</div>
+</body>
+</html>

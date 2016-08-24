@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Search Quotes</title>
+<style>
+body {
+    font-family: sans-serif;
+}
+span {
+    font-style: italic;
+}
+#wrapper {
+    text-align: center;
+}
+#search {
+    margin: 20px;
+}
+#button {
+    margin: 40px 40px 20px 40px;
+}
+#search_term {
+    width: 400px;
+}
+#search span {
+    font-style:normal;
+    margin-right: 10px;
+}
+#searchInProgress {
+    margin: 0px auto 0px auto;
+    display: inline-block;
+    visibility: hidden;
+    padding: 5px 10px;
+    opacity: 0.6;
+    background-color: #cccc00;
+}
+
+#search_result {
+    visibility: hidden;
+    height: 0px;
+}
+
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin: 10px;
+}
+
+td, th {
+    border: 1px solid black;
+    padding: 5px;
+}
+</style>
+
+<script language="javascript">
+function onSearch () {
+    var search_term = document.getElementById("search_term").value;
+    if (search_term.trim () == "") {
+        return;
+    }
+
+    document.querySelector("#searchBtn").disabled = true;
+    document.querySelector("#searchInProgress").style.visibility = "visible";
+
+    var url = "searchquote?s=" + encodeURIComponent(search_term);
+    var req = new window.XMLHttpRequest ();
+    req.onreadystatechange = function () {
+            displaySearchResult (req);
+            };
+    req.open ("GET", url, true);
+    req.send(null);
+}
+
+function displaySearchResult (req) {
+    if ((req.readyState == 4) && (req.status == 200)) {
+        var obj = JSON.parse (req.responseText);
+        var html;
+        if (obj.length != 0) {
+            html = buildResultTable (obj);
+        } else {
+            html = "";
+        }
+        document.querySelector ("#search_result_table").innerHTML = html;
+
+        document.querySelector ("#search_result_count").textContent = obj.length + (obj.length == 1 ? " quote" : " quotes") + " found";
+        document.querySelector ("#search_result").style.height = "auto";
+        document.querySelector ("#search_result").style.visibility = "visible";
+        document.querySelector ("#search_result_table").style.visibilty = "visible";
+
+        document.querySelector("#searchBtn").disabled = false;
+        document.querySelector("#searchInProgress").style.visibility = "hidden";
+    }
+}
+
+function buildResultTable (quotes) {
+    var html = "<table> \
+                <tr> \
+                <th>#</th><th>Quote</th><th>Author</th><th>Source</th><th>Created On</th><th>Notes</th> \
+                </tr>"
+
+    for (var i = 0; i < quotes.length; ++i) {
+        var q = quotes[i];
+        html += "<tr><td>" + q.id + "</td><td>" + q.quote + "</td><td>" + q.author + "</td><td>" +
+            q.source + "</td><td>" + q.createdOn + "</td><td>" + q.notes + "</td></tr>";
+    }
+
+    html += "</table>";
+    return html;
+}
+</script>
+</head>
+<body>
+<div id="search"><span>Search Term </span><input id="search_term" type="text" autocomplete="off">
+    <span id="button"><input id="searchBtn" type="button" value="Search" onclick="onSearch()"></span></div>
+<div id="wrapper"><div id="searchInProgress">Searching...</div></div>
+<div id="search_result">
+    <hr>
+    <h3>Search Results</h3>
+    <div id="search_result_count"></div>
+    <div id="search_result_table"></div>
+</div>
+<hr>
+<h3>Search Syntax</h3>
+<ul>
+    <li>The default searches for the input string in the quotations</li>
+    <li>Use the following keywords to search in specific fields: <span>quote:, author:, source:, note:</span><br>
+    Example: <ul><li><span>author:Rowling</span><li><span>source:Matrix</span></li></ul>
+    <li>Use the operators '&amp;' (and) and '|' (or) to combine queries. Example
+    <ul><li><span>author:Gandhi &amp; quote:leader</span></li></ul>
+    <li>Put search terms in quotes (&quot;&quot;) to search for the entire string. Example:
+    <ul><li><span>love life</span> searches for quotes containing 'love' or 'life'</li>
+        <li><span>"love life"</span> search for quotes containing the string "love life"</li></ul>
+</ul>
+</body>
+</html>

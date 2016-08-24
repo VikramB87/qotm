@@ -1,0 +1,12 @@
+{
+  "name": "QOTM",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.js",
+  "author": "markiv",
+  "dependencies": {
+   "sqlite3": "^3.1.4"
+  },
+  "devDependencies": {
+  }
+}

@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Add Quote</title>
+<style>
+body {
+    font-family: sans-serif;
+    margin-top: 30px;
+}
+
+div {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.textAreaWithLabel {
+    margin-left: 0px;
+}
+
+.textAreaWithLabel * {
+    vertical-align: middle;
+}
+input {
+    width: 300px;
+}
+textarea {
+    width: 300px;
+}
+span {
+    display: inline-block;
+    width: 80px;
+}
+
+#submit {
+    margin-top: 40px;
+    margin-left: 100px;
+}
+
+#btnSubmit {
+    width: 80px;
+}
+</style>
+<script language="javascript">
+function validateQuote () {
+    var quote = document.forms["qform"]["quote"].value;
+    if ((quote == null) || (quote.trim() == "")) {
+        alert ("Quote cannot be empty");
+        return false;
+    }
+    return true;
+}
+</script>
+</head>
+<body>
+<form name="qform" action="addquote" method="post" onsubmit="return validateQuote()">
+    <input type="hidden" name="id" value="$id">
+    <div class="textAreaWithLabel"><div><span>Quote</span> <textarea rows="8" name="quote">$quote</textarea></div></div>
+    <div><span>Author</span> <input type="text" name="author" value="$author"></div>
+    <div><span>Source</span> <input type="text" name="source" value="$source"></div>
+    <div class="textAreaWithLabel"><div><span>Notes</span> <textarea name="notes" rows="3">$notes</textarea></div></div>
+    <div><span>Secret</span> <input type="password" name="secret"></div>
+    <div id="submit"><input id="btnSubmit" type="submit" value="Submit"></div>
+</form>
+</body>
+</html>
+
