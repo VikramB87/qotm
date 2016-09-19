@@ -9,12 +9,8 @@ html, body {
     margin: 30px 50px 20px 20px;
     text-align: center;
     font-style: italic;
-    border: 1px solid lightblue;
-    border-radius: 8px;
     padding: 20px;
-    color: #6078db;
-    background-color: beige;
-    opacity: 0.65;
+    color: white;
 }
 
 .author {
@@ -22,11 +18,9 @@ html, body {
     font-size: 1.5em;
     margin: 0px 50px 20px 20px;
     text-align: right;
-    color: #607800;
-    background-color: beige;
+    color: white;
     display: inline-block;
     float: right;
-    opacity: 0.65;
     padding: 10px 10px 10px 10px;
 }
 
@@ -34,37 +28,37 @@ h3 {
     text-align: center;
     font-family: serif;
     margin: 50px auto 10px auto;
-    background-color: beige;
     opacity: 0.50;
     padding: 10px 10px 10px 10px;
     width: 50px;
+    color: #f2f2f2;
 }
 
 .refresh {
     background: url('images/refresh.png');
-    height: 25px;
-    width: 25px;
+    height: 32px;
+    width: 32px;
     margin: auto;
-    border-radius: 25px;
+    border-radius: 32px;
     clear: right;
 }
 
 .refresh:hover {
     background: url('images/refresh.png');
-    height: 25px;
-    width: 25px;
+    height: 32px;
+    width: 32px;
     margin: auto;
-    border-radius: 25px;
+    border-radius: 32px;
     clear: right;
     opacity: 0.5;
 }
 
 .refresh-in-progress {
     background: url('images/refresh-animated.gif');
-    height: 25px;
-    width: 25px;
+    height: 32px;
+    width: 32px;
     margin: auto;
-    border-radius: 25px;
+    border-radius: 32px;
     clear: right;
 }
 
@@ -77,6 +71,7 @@ h3 {
     font-family: serif;
     font-style: italic;
     text-align: center;
+    color: #f2f2f2;
 }
 
 .footer span {

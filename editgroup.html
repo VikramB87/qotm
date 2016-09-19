@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Add Image Group</title>
+<style>
+body {
+    font-family: sans-serif;
+    margin-top: 30px;
+}
+
+div {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.textAreaWithLabel * {
+    vertical-align: middle;
+}
+input {
+    width: 300px;
+}
+textarea {
+    width: 300px;
+}
+span {
+    display: inline-block;
+    width: 160px;
+}
+
+#submit {
+    margin-top: 40px;
+    margin-left: 100px;
+}
+
+#btnSubmit {
+    width: 80px;
+}
+
+.radio {
+    width: initial
+}
+</style>
+
+<script>
+function validate() {
+    var name = document.forms["image_group"]["groupName"].value;
+    if (name == null || name.trim() == "") {
+        alert("Group name cannot be empty");
+        return false;
+    }
+    var source = document.forms["image_group"]["imagesource"].value;
+    if (source != "url") {
+        return true;
+    }
+    var urls = document.forms["image_group"]["urls"].value;
+    if (urls !== null && urls !== "") {
+        var url_array = urls.split(";");
+        for (var i = 0; i < url_array.length; i++) {
+            if (!ValidURL (url)) {
+                alert("Invalid URL: " + url);
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function ValidURL(str) {
+  var pattern = new RegExp('^(https?:\/\/)?'+ // protocol
+    '((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|'+ // domain name
+    '((\d{1,3}\.){3}\d{1,3}))'+ // OR ip (v4) address
+    '(\:\d+)?(\/[-a-z\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\d%_.~+=-]*)?'+ // query string
+    '(\#[-a-z\d_]*)?$$','i'); // fragment locater
+
+  if(!pattern.test(str)) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("fileInput").style.display = "none";
+    document.querySelectorAll(".radio").forEach ((elem) => {
+        var urlControlState;
+        var fileControlState;
+        elem.onchange = function() {
+            if (this.value === 'files') {
+                urlControlState = "none";
+                fileControlState = "block";
+            } else {
+                urlControlState = "block";
+                fileControlState = "none";
+            }
+            document.getElementById("fileInput").style.display = fileControlState;
+            document.querySelector(".textAreaWithLabel").style.display = urlControlState;
+        }
+    });
+});
+</script>
+</head>
+<body>
+<form name="image_group" action="addgroup" method="post" enctype="multipart/form-data" onsubmit="return validate();">
+    <input type="hidden" name="id" value="$id">
+    <div><span>Group Name</span><input type="text" name="groupName" value="$name"></div>
+    <div><span>Image Source</span>
+    <input class="radio" type="radio" name="imagesource" value="url" checked> URL
+    <input class="radio" type="radio" name="imagesource" value="files"> Upload Files</div>
+    <div id="fileInput"><span>Images</span><input type="file" name="images" accept="image/*" multiple="true"></div>
+    <div class="textAreaWithLabel"><span>Image URLs</span><textarea id="urlInput" name="urls" rows="4" cols="200" placeholder="Separate multiple URLs with ';'"></textarea></div>
+    <div><span>Secret</span><input type="password" name="secret"></div>
+    <div id="submit"><input id="btnSubmit" type="submit" value="Submit"></div>
+</form>
+</body>
+</html>
+

@@ -5,7 +5,8 @@
   "main": "server.js",
   "author": "markiv",
   "dependencies": {
-   "sqlite3": "^3.1.4"
+   "sqlite3": "^3.1.4",
+   "multiparty" : "^4.1.2"
   },
   "devDependencies": {
   }
